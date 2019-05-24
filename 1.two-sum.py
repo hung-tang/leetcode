@@ -4,12 +4,12 @@
 # [1] Two Sum
 #
 class Solution:
-    def twoSum(self, nums: List[int], target: int) -> List[int]:
-        lookup = {}
-        for i in range(len(nums)):
-            ans = target - nums[i]
-            if ans in lookup:
-                return [lookup[ans], i]
-            lookup[nums[i]] = i
+  def twoSum(self, nums: List[int], target: int) -> List[int]:
+    lookup = {}
+    for i in range(len(nums)):
+      ans = target - nums[i]
+      if ans in lookup:
+        return [lookup[ans], i]
+      lookup[nums[i]] = i
         
 
