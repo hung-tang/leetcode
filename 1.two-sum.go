@@ -5,7 +5,6 @@
  */
 func twoSum(nums []int, target int) []int {
 	m := make(map[int]int)
-
 	for i, num := range nums {
 		ans := target - num
 		idx, ok := m[ans]
