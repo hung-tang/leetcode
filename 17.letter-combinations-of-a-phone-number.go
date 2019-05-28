@@ -21,20 +21,21 @@ func letterCombinations(digits string) []string {
 	}
 	res := make([]string, 0)
 	builder := make([]byte, 0)
-	return dfs(digits, 0, m, builder, res)
+	dfs(digits, 0, m, builder, &res)
+	return res
 }
 
-func dfs(digits string, idx int, m map[string]string, builder []byte, res []string) []string {
+func dfs(digits string, idx int, m map[string]string, builder []byte, res *[]string) {
 	if idx == len(digits) {
-		return append(res, string(builder))
+		*res = append(*res, string(builder))
+		return
 	}
 	letters := m[string(digits[idx])]
 	for i := range letters {
 		builder = append(builder, byte(letters[i]))
-		res = dfs(digits, idx+1, m, builder, res)
+		dfs(digits, idx+1, m, builder, res)
 		builder = builder[:len(builder)-1]
 	}
-	return res
 }
 
 // func main() {
