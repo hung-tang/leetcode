@@ -89,8 +89,3 @@ func print(l *ListNode) {
 
 // 	print(addTwoNumbers(&al2, &bl3))
 // }
-
-// type ListNode struct {
-// 	Val  int
-// 	Next *ListNode
-// }
