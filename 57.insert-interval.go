@@ -39,7 +39,8 @@ func insert(intervals [][]int, newInterval []int) [][]int {
 		}
 	}
 
-	// if the new interval's end is less, then we insert the newInterval and the remaining
+	// 2 cases to consider: (1) non-overlap, (2) overlap
+	// Case 1 - non-overlap
 	if newInterval[1] < intervals[overlappingIdx][0] {
 		res = append(res, newInterval)
 		for i := overlappingIdx; i < len(intervals); i++ {
@@ -48,30 +49,26 @@ func insert(intervals [][]int, newInterval []int) [][]int {
 		return res
 	}
 
-	// expansion strategy
-	expand := intervals[overlappingIdx]
-	if newInterval[0] < expand[0] { //minimize initial range
-		expand[0] = newInterval[0]
-	}
-	if newInterval[1] > expand[1] { //maximize initial range
-		expand[1] = newInterval[1]
-	}
-	// keep expanding if possible
-	for i := overlappingIdx + 1; i < len(intervals); i++ {
+	// Case 2 - overlap, use expansion strategy
+	expand := newInterval
+	for i := overlappingIdx; i < len(intervals); i++ {
 		current := intervals[i]
-		if current[0] > expand[1] { // expansion is done
+		if current[0] > expand[1] { // expansion is done when there's no overlap
 			res = append(res, expand)
 			for j := i; j < len(intervals); j++ {
 				res = append(res, intervals[j])
 			}
 			return res
 		}
-		// expansion continues
-		if current[1] > expand[1] {
+		// keep expanding if there's overlap
+		if current[1] > expand[1] { // merge - new minimum
 			expand[1] = current[1]
 		}
+		if current[0] < expand[0] { // merge - new maximum
+			expand[0] = current[0]
+		}
 	}
-	// if it gets here, we need to add the expand
+	// edge case - add the expansion if this is the last item
 	res = append(res, expand)
 	return res
 }
