@@ -11,27 +11,27 @@ func wordBreak(s string, wordDict []string) bool {
 		dict[wordDict[i]] = true
 	}
 	dp := make(map[int]bool)
-	wb(s, 0, &dict, &dp)
+	wb(s, 0, dict, dp)
 	return dp[0]
 }
 
-func wb(s string, idx int, dict *map[string]bool, dp *map[int]bool) bool {
+func wb(s string, idx int, dict map[string]bool, dp map[int]bool) bool {
 	if idx == len(s) {
 		return true
 	}
-	res, found := (*dp)[idx]
+	res, found := dp[idx]
 	if found {
 		return res
 	}
 	for i := idx; i < len(s); i++ {
 		partial := s[idx : i+1]
-		_, found := (*dict)[partial]
+		_, found := dict[partial]
 		if found && wb(s, i+1, dict, dp) {
-			(*dp)[idx] = true
+			dp[idx] = true
 			return true
 		}
 	}
-	(*dp)[idx] = false
+	dp[idx] = false
 	return false
 }
 

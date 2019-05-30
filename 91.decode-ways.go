@@ -16,15 +16,15 @@ func numDecodings(s string) int {
 		return 0
 	}
 	dp := make(map[int]int)
-	dfs2(s, 0, &dp)
+	dfs2(s, 0, dp)
 	return dp[0]
 }
 
-func dfs2(s string, start int, dp *map[int]int) int {
+func dfs2(s string, start int, dp map[int]int) int {
 	if start == len(s) {
 		return 1
 	}
-	cached, found := (*dp)[start]
+	cached, found := dp[start]
 	if found {
 		return cached
 	}
@@ -32,7 +32,7 @@ func dfs2(s string, start int, dp *map[int]int) int {
 	for i := start; i < int(math.Min(float64(len(s)), float64(start+2))); i++ {
 		digitStr := string(s[start : i+1])
 		if string(digitStr[0]) == "0" { // needed because Atoi will covert "01" to "1"
-			(*dp)[start] = 0
+			dp[start] = 0
 			return 0
 		}
 		digitInt, error := strconv.Atoi(digitStr)
@@ -46,7 +46,7 @@ func dfs2(s string, start int, dp *map[int]int) int {
 			res += dfs2(s, i+1, dp)
 		}
 	}
-	(*dp)[start] = res
+	dp[start] = res
 	return res
 }
 

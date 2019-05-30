@@ -21,13 +21,13 @@ func letterCombinations(digits string) []string {
 	}
 	res := make([]string, 0)
 	builder := make([]byte, 0)
-	dfs(digits, 0, m, builder, &res)
+	dfs(digits, 0, m, builder, res)
 	return res
 }
 
-func dfs(digits string, idx int, m map[string]string, builder []byte, res *[]string) {
+func dfs(digits string, idx int, m map[string]string, builder []byte, res []string) {
 	if idx == len(digits) {
-		*res = append(*res, string(builder))
+		res = append(res, string(builder))
 		return
 	}
 	letters := m[string(digits[idx])]
