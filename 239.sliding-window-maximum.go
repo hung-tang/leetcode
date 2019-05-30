@@ -13,17 +13,17 @@ func maxSlidingWindow(nums []int, k int) []int {
 	q := make([]int, 0)
 	m := make([]int, 0)
 	for i := 0; i < k; i++ {
-		insert(&q, &m, k, nums[i])
+		insert239(&q, &m, k, nums[i])
 	}
 	res = append(res, m[0])
 	for i := k; i < len(nums); i++ {
-		insert(&q, &m, k, nums[i])
+		insert239(&q, &m, k, nums[i])
 		res = append(res, m[0])
 	}
 	return res
 }
 
-func insert(q *[]int, m *[]int, k int, num int) {
+func insert239(q *[]int, m *[]int, k int, num int) {
 	if len(*q) == k {
 		if (*m)[0] == (*q)[0] {
 			*m = (*m)[1:] // remove max
