@@ -13,7 +13,8 @@ func intervalIntersection(A [][]int, B [][]int) [][]int {
 
 	i, j := 0, 0
 	var prev, cur []int
-	for i < len(A) && j < len(B) {
+	for i < len(A) && j < len(B) { // this is like the merge step in mergesort
+		// set the prev
 		if prev == nil {
 			if A[i][0] < B[j][0] || (A[i][0] == B[j][0] && A[i][1] < B[j][1]) {
 				prev = A[i]
@@ -24,7 +25,7 @@ func intervalIntersection(A [][]int, B [][]int) [][]int {
 			j++
 			continue
 		}
-
+		// set cur to be the smallest interval
 		if A[i][0] < B[j][0] || (A[i][0] == B[j][0] && A[i][1] < B[j][1]) {
 			cur = A[i]
 			i++
@@ -48,7 +49,7 @@ func intervalIntersection(A [][]int, B [][]int) [][]int {
 }
 
 func overlapHelper(cur *[]int, prev *[]int, res *[][]int) {
-	// non-overlap
+	// non-overlap -> set the prev to be cur
 	if (*cur)[0] > (*prev)[1] {
 		*prev = *cur
 		return
