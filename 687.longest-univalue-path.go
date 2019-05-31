@@ -101,10 +101,4 @@ func lup(node *TreeNode, res *int) (int, int) {
 	n4.Left = &n7
 	fmt.Println(longestUnivaluePath(&n1))
 
-}
-
-type TreeNode struct {
-	Val   int
-	Left  *TreeNode
-	Right *TreeNode
-} */
+}*/
