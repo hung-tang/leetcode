@@ -18,20 +18,20 @@ func shortestDistance(words []string, word1 string, word2 string) int {
 		if strings.Compare(word, word1) == 0 {
 			idx1 = i
 			if idx2 != -1 {
-				res = min(res, int(math.Abs(float64(idx1-idx2))))
+				res = min2(res, int(math.Abs(float64(idx1-idx2))))
 			}
 		}
 		if strings.Compare(word, word2) == 0 {
 			idx2 = i
 			if idx1 != -1 {
-				res = min(res, int(math.Abs(float64(idx1-idx2))))
+				res = min2(res, int(math.Abs(float64(idx1-idx2))))
 			}
 		}
 	}
 	return res
 }
 
-func min(i, j int) int {
+func min2(i, j int) int {
 	if i <= j {
 		return i
 	}
