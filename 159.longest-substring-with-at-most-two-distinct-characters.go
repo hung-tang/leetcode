@@ -17,21 +17,17 @@ func lengthOfLongestSubstringTwoDistinct(s string) int {
 		ch := string(s[j])
 		if len(count) == 2 && count[ch] == 0 {
 			for i <= j && len(count) == 2 {
-				remove := string(s[i])
-				if count[remove] == 1 {
+				if remove := string(s[i]); count[remove] == 1 {
 					delete(count, remove)
 				} else {
-					count[remove] = count[remove] - 1
+					count[remove]--
 				}
 				i++
 			}
 		}
-		count[ch] = count[ch] + 1
-		if len(count) <= 2 {
-			curLen := j - i
-			if curLen > maxLen {
-				maxLen = curLen
-			}
+		count[ch]++
+		if curLen := j - i; len(count) <= 2 && curLen > maxLen {
+			maxLen = curLen
 		}
 		j++
 	}
