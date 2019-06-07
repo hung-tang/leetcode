@@ -13,9 +13,8 @@ func maxArea(height []int) int {
 	if height == nil || len(height) <= 1 {
 		return 0
 	}
-	i, j := 0, len(height)-1
 	max := math.MinInt32
-	for i < j {
+	for i, j := 0, len(height)-1; i < j; {
 		len := j - i
 		max = max3(max, min3(height[i], height[j])*len)
 		if height[i] <= height[j] {
