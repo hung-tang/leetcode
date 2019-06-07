@@ -18,15 +18,11 @@ func maxArea(height []int) int {
 	for i < j {
 		len := j - i
 		max = max3(max, min3(height[i], height[j])*len)
-		if height[i] < height[j] {
+		if height[i] <= height[j] {
 			i++
 			continue
 		}
-		if height[j] < height[i] {
-			j--
-			continue
-		}
-		i++
+		j--
 	}
 	if max == math.MinInt32 {
 		return 0
