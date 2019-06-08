@@ -14,33 +14,33 @@ func longestValidParentheses(s string) int {
 	if len(s) == 0 {
 		return 0
 	}
-	open := make([]int, 0)
-	regular := make([]string, 0)
+	prevOpen := make([]int, 0)
+	stack := make([]string, 0)
 	max := math.MinInt32
 	for i := 0; i < len(s); i++ {
-		ch := string(s[i])
-		if ch == "(" {
-			regular = append(regular, "(")
-			open = append(open, len(regular)-1)
+		if ch := string(s[i]); ch == "(" {
+			stack = append(stack, "(")
+			prevOpen = append(prevOpen, len(stack)-1)
 			continue
 		}
 		// ch == ')'
-		if len(open) == 0 {
-			regular = append(regular, ")")
+		if len(prevOpen) == 0 {
+			stack = append(stack, ")")
 			continue
 		}
-		idx := open[len(open)-1]
-		open = open[:len(open)-1]
 
-		if idx+1 >= len(regular) {
-			regular = regular[:len(regular)-1] // remove "("
-			regular = append(regular, "1")
-			helper2(&regular, &max)
-		} else {
-			num, _ := strconv.Atoi(regular[len(regular)-1])
-			regular = regular[:len(regular)-2]
-			regular = append(regular, strconv.Itoa((num + 1)))
-			helper2(&regular, &max)
+		idx := prevOpen[len(prevOpen)-1]
+		prevOpen = prevOpen[:len(prevOpen)-1] // pop
+
+		if idx+1 >= len(stack) { // case: "("
+			stack = stack[:len(stack)-1] // remove the "("
+			stack = append(stack, "1")
+			addAndMergeNumbers(&stack, &max)
+		} else { // case: "(5"
+			num, _ := strconv.Atoi(stack[len(stack)-1])
+			stack = stack[:len(stack)-2] // remove the "(5"
+			stack = append(stack, strconv.Itoa((num + 1)))
+			addAndMergeNumbers(&stack, &max)
 		}
 	}
 	if max == math.MinInt32 {
@@ -48,15 +48,15 @@ func longestValidParentheses(s string) int {
 	}
 	return max
 }
-func helper2(regular *[]string, max *int) {
+func addAndMergeNumbers(stack *[]string, max *int) {
 	count := 0
-	for len(*regular) > 0 && (*regular)[len(*regular)-1] != "(" && (*regular)[len(*regular)-1] != ")" {
-		num, _ := strconv.Atoi((*regular)[len(*regular)-1])
+	for len(*stack) > 0 && (*stack)[len(*stack)-1] != "(" && (*stack)[len(*stack)-1] != ")" {
+		num, _ := strconv.Atoi((*stack)[len(*stack)-1])
 		count += num
-		*regular = (*regular)[:len(*regular)-1]
+		*stack = (*stack)[:len(*stack)-1]
 	}
 	*max = max4(*max, count*2)
-	*regular = append(*regular, strconv.Itoa(count))
+	*stack = append(*stack, strconv.Itoa(count))
 }
 
 func max4(i, j int) int {
